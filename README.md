@@ -1,3 +1,6 @@
+Subject Programming for Data Science 
+
+* Assignment 01 
 
 Create and test a function to compute net pay from payment, work and tax credit information.
 
@@ -11,8 +14,7 @@ For Example:
 
 12345 Green Joe 37 16 1.5 70 700
 
-Create Employee Objects from these
-
+Create Employee Objects from these 
 Read in a file named Hours.txt which contains the following information:
 
 <StaffID> <Date> <HoursWorked>
@@ -47,5 +49,3 @@ Higher Tax cannot be negative.
 Net Pay cannot be negative.
 
 I would like you to solve for Joe Green
-
-Hello There
