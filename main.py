@@ -31,8 +31,8 @@ class Employee:
                 HighTax = HighPayBand * self.HT
                 TotalTax = StandardTax + HighTax
                 Name = self.FirstName[i] + self.LastName[i]
-                NetDeductions = 74.8
-                NetPay = 637.2
+                NetDeductions = self.TaxCredit[i] + HighTax
+                NetPay = GrossPay - NetDeductions
                 Date = self.Date[i]
                 return {'Name': Name, 'Date':Date, 'Regular Hours Worked': self.RegHr[i],
                 'Overtime Hours Worked':overTime,'Regular Rate':self.HourlyRate,
