@@ -1,0 +1,2 @@
+StaffID LastName FirstName RegHours HourlyRate OTMultiple TaxCredit StandardBand
+12345 Green Joe 37 16 1.5 70 700

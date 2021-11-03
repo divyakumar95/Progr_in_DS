@@ -1,0 +1,2 @@
+StaffID Date HoursWorked
+12345 31/10/2021 42
