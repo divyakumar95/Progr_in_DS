@@ -30,15 +30,15 @@ class Employee:
                 StandardTax = self.StdBnd[i] * self.ST
                 HighTax = HighPayBand * self.HT
                 TotalTax = StandardTax + HighTax
-                Name = self.FirstName[i] + self.LastName[i]
+                Name = self.FirstName[i] +' '+ self.LastName[i]
                 NetDeductions = self.TaxCredit[i] + HighTax
                 NetPay = GrossPay - NetDeductions
                 Date = self.Date[i]
                 return {'Name': Name, 'Date':Date, 'Regular Hours Worked': self.RegHr[i],
-                'Overtime Hours Worked':overTime,'Regular Rate':self.HourlyRate,
+                'Overtime Hours Worked':overTime,'Regular Rate':self.HourlyRate[i],
                 'Overtime Rate':self.OtRate, 'Regular Pay':RegularRate, 'Overtime Pay':overTimePay,
                 'Gross Pay':GrossPay, 'Standard Rate Pay':self.StdBnd[i],'Higher Rate Pay':HighPayBand,
-                'Standard Tax':StandardTax,'Higher Tax':HighTax, 'Total Tax': TotalTax, 'Tax Credit':self.TaxCredit[i],
+                'Standard Tax':StandardTax,'Higher Tax':round(HighTax,2), 'Total Tax': TotalTax, 'Tax Credit':self.TaxCredit[i],
                 'Net Deductions':NetDeductions, 'Net Pay': NetPay}
             
 
