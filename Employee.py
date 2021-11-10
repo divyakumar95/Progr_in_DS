@@ -20,13 +20,14 @@ class Employee:
         if self.StaffID is None and self.StaffDb is None:  #check if no specific Employee
             self.StaffDb = 'DataFiles/Hours.txt'
             Hours_data = pd.read_csv(self.StaffDb, sep=" ", header=0, index_col=False)
-            self.HoursWorked = [HW for HW in Hours_data['HoursWorked']]
-            self.Date = [DA for DA in Hours_data['Date']]
+            self.HoursWork = [HW for HW in Hours_data['HoursWorked']]
+            self.date = [DA for DA in Hours_data['Date']]
             self.StafID = [StaffID for StaffID in Hours_data['StaffID']]
             for i in range(len(self.StafID)):
-                self.StaffId = self.StafID[i]
-                print(self.StaffID[i],self.HoursWorked[i],self.Date[i])
-                print(self.ComputePayment(self.HoursWorked[i], self.Date[i]))
+                self.StaffID = self.StafID[i]
+                self.HoursWorked = self.HoursWork[i]
+                self.Date = self.date[i]
+                print(self.ComputePayment(self.HoursWorked, self.Date))
         
     def EmpDB(self):
         #Employee_data = pd.read_csv(self.EmployeeDB, sep=" ", header=0, index_col=False)
@@ -42,7 +43,7 @@ class Employee:
     def ComputePayment(self, HoursWorked=None , Date=None):  
         self.HoursWorked = HoursWorked
         self.Date = Date
-        print(self.HoursWorked, self.Date, self.StaffID)
+        print(self.StaffID, self.HoursWorked, self.Date)
         for i in range(len(self.RefID)):
             if self.StaffID == self.RefID[i]:
                 if type(self.HoursWorked) == list:
