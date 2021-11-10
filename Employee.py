@@ -1,4 +1,5 @@
 from datetime import date
+from logging import error
 from typing import List
 import pandas as pd
 
@@ -62,7 +63,10 @@ class Employee:
                 TotalTax = StandardTax + HighTax
                 Name = self.FirstName[i] +' '+ self.LastName[i]
                 NetDeductions = self.TaxCredit[i] + HighTax
-                NetPay = GrossPay - NetDeductions
+                if GrossPay != 0:
+                    NetPay = GrossPay - NetDeductions
+                else:
+                    raise ValueError('Regular hour or hourly rate can not be zero')
                 Date = self.Date
                 
                 return {'Name': Name, 'Date':Date, 'Regular Hours Worked': self.RegHr[i],
