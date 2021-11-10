@@ -46,10 +46,7 @@ class Employee:
         print(self.StaffID, self.HoursWorked, self.Date)
         for i in range(len(self.RefID)):
             if self.StaffID == self.RefID[i]:
-                if type(self.HoursWorked) == list:
-                    overTime = self.HoursWorked[i] - self.RegHr[i]
-                else:
-                    overTime = self.HoursWorked - self.RegHr[i]
+                overTime = self.HoursWorked - self.RegHr[i]
                 overTimePay = overTime * self.OtRate
                 RegularRate = self.RegHr[i] * self.HourlyRate[i]
                 GrossPay = (self.HourlyRate[i] * self.RegHr[i]) + (overTimePay)
@@ -60,10 +57,7 @@ class Employee:
                 Name = self.FirstName[i] +' '+ self.LastName[i]
                 NetDeductions = self.TaxCredit[i] + HighTax
                 NetPay = GrossPay - NetDeductions
-                if type(self.Date) == List:
-                    Date = self.Date[i]
-                else:
-                    Date = self.Date
+                Date = self.Date
                 
                 return {'Name': Name, 'Date':Date, 'Regular Hours Worked': self.RegHr[i],
                 'Overtime Hours Worked':overTime,'Regular Rate':self.HourlyRate[i],
