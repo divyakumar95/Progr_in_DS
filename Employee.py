@@ -43,10 +43,13 @@ class Employee:
     def ComputePayment(self, HoursWorked=None , Date=None):  
         self.HoursWorked = HoursWorked
         self.Date = Date
-        print(self.StaffID, self.HoursWorked, self.Date)
+        #print(self.StaffID, self.HoursWorked, self.Date)
         for i in range(len(self.RefID)):
             if self.StaffID == self.RefID[i]:
-                overTime = self.HoursWorked - self.RegHr[i]
+                if self.HoursWorked > self.RegHr[i]:
+                    overTime = self.HoursWorked - self.RegHr[i]
+                else:
+                    overTime = 0
                 overTimePay = overTime * self.OtRate
                 RegularRate = self.RegHr[i] * self.HourlyRate[i]
                 GrossPay = (self.HourlyRate[i] * self.RegHr[i]) + (overTimePay)
@@ -68,6 +71,4 @@ class Employee:
 
 
 if __name__ == '__main__':
-    #Emp = Employee(12346)
-    #print(Emp.ComputePayment(2,'31/10/2021'))
     Employee()
