@@ -46,14 +46,17 @@ class Employee:
         #print(self.StaffID, self.HoursWorked, self.Date)
         for i in range(len(self.RefID)):
             if self.StaffID == self.RefID[i]:
-                if self.HoursWorked > self.RegHr[i]:
+                if self.HoursWorked > self.RegHr[i]:            # Check for Overtime 
                     overTime = self.HoursWorked - self.RegHr[i]
                 else:
                     overTime = 0
                 overTimePay = overTime * self.OtRate
                 RegularRate = self.RegHr[i] * self.HourlyRate[i]
                 GrossPay = (self.HourlyRate[i] * self.RegHr[i]) + (overTimePay)
-                HighPayBand = GrossPay - self.StdBnd[i]
+                if GrossPay > self.StdBnd[i]:                   # Check for High Payment Rate 
+                    HighPayBand = GrossPay - self.StdBnd[i]
+                else:
+                    HighPayBand = 0
                 StandardTax = self.StdBnd[i] * self.ST
                 HighTax = HighPayBand * self.HT
                 TotalTax = StandardTax + HighTax
