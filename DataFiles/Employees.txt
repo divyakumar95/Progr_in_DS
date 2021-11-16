@@ -3,4 +3,4 @@ StaffID LastName FirstName RegHours HourlyRate OTMultiple TaxCredit StandardBand
 12346 Gi Joe 33 17 1.5 60 600
 12347 Chi Bing 45 20 2 65 900
 12348 Mark Bud 37 19 0 90 500
-12349 Ji Joe 30 0 0 12 121
+12349 Ji Joe 30 05 0 12 121
