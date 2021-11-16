@@ -1,6 +1,3 @@
-from datetime import date
-from logging import error
-from typing import List
 import pandas as pd
 
 class Employee:
@@ -11,13 +8,14 @@ class Employee:
         self.StaffID = StafID
         self.EmplDb = EmplDb
         self.StaffDb = StaffDb
-        if self.EmplDb is None:      #check for external file source
+        if self.EmplDb != None:                     #check for external file source 
             self.EmplDb = './DataFiles/Employees.txt'
-            try:
-                self.Employee_data = pd.read_csv(self.EmplDb, sep=" ", header=0, index_col=False)
-            except Exception as Error:
-                print('Please fill the table fully if unknown specify 0')
-            self.EmpDB()
+        try:
+            self.Employee_data = pd.read_csv(self.EmplDb, sep=" ", header=0, index_col=False)
+        except Exception as Error:
+            print('Please fill the table fully if unknown specify 0',Error)
+            raise Exception
+        self.EmpDB()
         if self.StaffID is None and self.StaffDb is None:  #check if no specific Employee
             self.StaffDb = 'DataFiles/Hours.txt'
             Hours_data = pd.read_csv(self.StaffDb, sep=" ", header=0, index_col=False)
@@ -28,7 +26,8 @@ class Employee:
                 self.StaffID = self.StafID[i]
                 self.HoursWorked = self.HoursWork[i]
                 self.Date = self.date[i]
-                print(self.ComputePayment(self.HoursWorked, self.Date))
+                comp = self.ComputePayment(self.HoursWorked, self.Date)
+                print(comp)
         
     def EmpDB(self):
         #Employee_data = pd.read_csv(self.EmployeeDB, sep=" ", header=0, index_col=False)
@@ -73,9 +72,9 @@ class Employee:
                 'Overtime Hours Worked':overTime,'Regular Rate':self.HourlyRate[i],
                 'Overtime Rate':self.OtRate, 'Regular Pay':RegularRate, 'Overtime Pay':overTimePay,
                 'Gross Pay':GrossPay, 'Standard Rate Pay':self.StdBnd[i],'Higher Rate Pay':HighPayBand,
-                'Standard Tax':StandardTax,'Higher Tax':round(HighTax,2), 'Total Tax': TotalTax, 'Tax Credit':self.TaxCredit[i],
+                'Standard Tax':round(StandardTax,2),'Higher Tax':round(HighTax,2), 'Total Tax': round(TotalTax,2), 'Tax Credit':self.TaxCredit[i],
                 'Net Deductions':NetDeductions, 'Net Pay': NetPay}
 
 
 if __name__ == '__main__':
-    Employee()
+    Employee() 
