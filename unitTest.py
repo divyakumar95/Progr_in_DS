@@ -45,7 +45,7 @@ class Test(unittest.TestCase):
         'Standard Rate Pay': 600,
         'Standard Tax': 120.0,
         'Tax Credit': 60,
-        'Total Tax': 120.0 }, msg="different message obtained")
+        'Total Tax': 120.0 }, msg="Different message obtained")
 
     @unittest.expectedFailure
     def test_Regular_WorkHr(self):
