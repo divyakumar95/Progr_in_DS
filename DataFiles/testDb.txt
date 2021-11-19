@@ -1,0 +1,7 @@
+StaffID LastName FirstName RegHours HourlyRate OTMultiple TaxCredit StandardBand
+12345 Green Joe 37 16 1.5 70 700
+12346 Gi Joe 33 17 1.5 60 600
+12350 Sing Honey 45 20 2 65 900
+12351 Mark David 37 19 0 90 500
+12352 Ali Mohamed 37 19 0 90 500
+12349 Ji Joe 30 0 0 12 121

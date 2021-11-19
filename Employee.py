@@ -8,14 +8,15 @@ class Employee:
         self.StaffID = StafID
         self.EmplDb = EmplDb
         self.StaffDb = StaffDb
-        if self.EmplDb != None:                     #check for external file source 
+        if self.EmplDb == None:                     #check for external file source 
             self.EmplDb = './DataFiles/Employees.txt'
-        try:
             self.Employee_data = pd.read_csv(self.EmplDb, sep=" ", header=0, index_col=False)
-        except Exception as Error:
-            print('Please fill the table fully if unknown specify 0',Error)
-            raise Exception
-        self.EmpDB()
+        elif self.EmplDb != None:
+            self.Employee_data = pd.read_csv(self.EmplDb, sep=" ", header=0, index_col=False)
+        else:
+            #print('Please fill the table fully if unknown specify 0',Error)
+            raise Exception('Invalid file path or buffer object type')
+        self.EmpDB()    
         if self.StaffID is None and self.StaffDb is None:  #check if no specific Employee
             self.StaffDb = 'DataFiles/Hours.txt'
             Hours_data = pd.read_csv(self.StaffDb, sep=" ", header=0, index_col=False)
