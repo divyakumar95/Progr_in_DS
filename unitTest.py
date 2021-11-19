@@ -83,8 +83,5 @@ class Test(unittest.TestCase):
         except ValueError as error:
             self.assertEqual(type(error),ValueError)
 
-
-
 if __name__ == '__main__':
     unittest.main()
-    removeFile()
