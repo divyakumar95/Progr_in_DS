@@ -42,13 +42,13 @@ class Test(unittest.TestCase):
         'Standard Rate Pay': 600,
         'Standard Tax': 120.0,
         'Tax Credit': 60,
-        'Total Tax': 120.0 })
+        'Total Tax': 120.0 }, msg="different message obtained")
 
     @unittest.expectedFailure
     def test_Regular_WorkHr(self):
         Emp = EmployeeClass.Employee(12350,EmplDb=self.get_file())
-        Emp = Emp.ComputePayment(55,'01/11/2021')
-        self.assertLessEqual(Emp['Regular Hours Worked'],55, msg="Regular Hours Worked not exceeding hour worked")
+        Emp = Emp.ComputePayment(22,'01/11/2021')
+        self.assertLessEqual(Emp['Regular Hours Worked'],22, msg="Regular Hours Worked not exceeding hour worked")
 
     @unittest.expectedFailure
     def test_Negative_Overtime(self):               # Test for Negative Over time 
@@ -71,7 +71,7 @@ class Test(unittest.TestCase):
     def test_wrong_ID(self):
         Emp = EmployeeClass.Employee(11111,EmplDb=self.get_file())
         Emp = Emp.ComputePayment(60,'03/02/2021')
-        self.assertTrue(Emp, msg="Wrong Staff ID")
+        self.assertTrue(Emp, msg="Wrong Staff ID")  
 
     def test_negative_NetPay(self):
         Emp =EmployeeClass.Employee(12349,EmplDb=self.get_file())
@@ -80,12 +80,10 @@ class Test(unittest.TestCase):
         except ValueError as error:
             self.assertEqual(type(error),ValueError)
 
-    def test_delete(self):                         #use as a last function to delete the test file
-        try:
-            os.remove(self.get_file())
-        except Exception as e:
-            print(e)
-
 if __name__ == '__main__':
     unittest.main()
-    
+    #try:                #use as a last function to delete the test file
+    #os.remove('./DataFiles/testDb.txt')
+    #print("here in deletion")
+    #except Exception as e:  
+    #    print(e)
