@@ -1,9 +1,9 @@
 import unittest
 import os
-import Employee as EmployeeClass
+import Employee as MainFile
 
 class Test(unittest.TestCase):
-    def setUp(self):
+    def setUp(self):            #Check to create file 
         with open(self.get_file(),'w') as f:
             f.write("""StaffID LastName FirstName RegHours HourlyRate OTMultiple TaxCredit StandardBand
 12345 Green Joe 37 16 1.5 70 700
@@ -21,14 +21,14 @@ class Test(unittest.TestCase):
         os.remove(self.get_file())     #use as a last function to delete the test file
 
     def test_expect_responce (self):
-        Emp = EmployeeClass.Employee(12345,EmplDb=self.get_file())
-        Emp = Emp.ComputePayment(42,'31/10/2021')
-        self.assertIsNotNone(Emp, msg="No response from the system")
+        Emp = MainFile.Employee(12345, 'Green', 'Joe', 37, 16, 1.5, 70, 700)
+        comp = Emp.ComputePayment(42,'31/10/2021')
+        self.assertIsNotNone(comp, msg="No response from the system")
 
     def test_verify_responce(self):
-        Emp = EmployeeClass.Employee(12346,self.get_file())
-        Emp = Emp.ComputePayment(2,'31/10/2021')
-        self.assertDictEqual(Emp, 
+        Emp = MainFile.Employee(12346, 'Gi', 'Joe', 33, 17, 1.5, 60, 600)
+        comp = Emp.ComputePayment(2,'31/10/2021')
+        self.assertDictEqual(comp, 
         {'Date': '31/10/2021',
         'Gross Pay': 561,
         'Higher Rate Pay': 0,
@@ -39,7 +39,7 @@ class Test(unittest.TestCase):
         'Overtime Hours Worked': 0,
         'Overtime Pay': 0,
         'Overtime Rate': 24,
-        'Regular Hours Worked': 33,
+        'Regular Hours Worked': 2,
         'Regular Pay': 561,
         'Regular Rate': 17,
         'Standard Rate Pay': 600,
@@ -47,41 +47,40 @@ class Test(unittest.TestCase):
         'Tax Credit': 60,
         'Total Tax': 120.0 }, msg="Different message obtained")
 
-    @unittest.expectedFailure
     def test_Regular_WorkHr(self):
-        Emp = EmployeeClass.Employee(12350,EmplDb=self.get_file())
-        Emp = Emp.ComputePayment(22,'01/11/2021')
-        self.assertLessEqual(Emp['Regular Hours Worked'],22, msg="Regular Hours Worked not exceeding hour worked")
+        Emp = MainFile.Employee(12350, 'Sing', 'Honey', 45, 20, 2, 65, 900)
+        comp = Emp.ComputePayment(22,'01/11/2021')
+        self.assertEqual(comp['Regular Hours Worked'],22, msg="Regular Hours Worked not exceeding hour worked")
 
-    @unittest.expectedFailure
     def test_Negative_Overtime(self):               # Test for Negative Over time 
-        Emp = EmployeeClass.Employee(12345,EmplDb=self.get_file())
-        Emp = Emp.ComputePayment(5,'31/10/2021')
-        self.assertLess(Emp['Overtime Pay'], 0, msg="Value Emp['Overtime Pay'] is not Negative")
+        Emp = MainFile.Employee(12345, 'Green', 'Joe', 37, 16, 1.5, 70, 700)
+        comp = Emp.ComputePayment(5,'31/10/2021')
+        self.assertGreaterEqual(comp['Overtime Pay'], 0, msg="Value Emp['Overtime Pay'] is not Negative")
     
-    @unittest.expectedFailure
     def test_Negative_HigherTax(self):              # Test for Negative Over time 
-        Emp = EmployeeClass.Employee(12345,EmplDb=self.get_file())
-        Emp = Emp.ComputePayment(5,'31/10/2021')
-        self.assertLess(Emp['Higher Tax'], 0, msg="Value Emp['Higher Tax'] is not Negative")
+        Emp = MainFile.Employee(12345, 'Green', 'Joe', 37, 16, 1.5, 70, 700)
+        comp = Emp.ComputePayment(5,'31/10/2021')
+        self.assertGreaterEqual(comp['Higher Tax'], 0, msg="Value Emp['Higher Tax'] is not Negative")
     
     def test_check_Pay(self):                       # Test Netpay and GrossPay
-        Emp = EmployeeClass.Employee(12345,EmplDb=self.get_file())
-        Emp= Emp.ComputePayment(2,'31/10/2021')
-        self.assertLessEqual(Emp['Net Pay'],Emp['Gross Pay'], msg="Netpay and GrossPay")
+        Emp = MainFile.Employee(12345, 'Green', 'Joe', 37, 16, 1.5, 70, 700)
+        comp= Emp.ComputePayment(2,'31/10/2021')
+        self.assertLessEqual(comp['Net Pay'],comp['Gross Pay'], msg="Netpay and GrossPay")
 
-    @unittest.expectedFailure
     def test_wrong_ID(self):
-        Emp = EmployeeClass.Employee(11111,EmplDb=self.get_file())
-        Emp = Emp.ComputePayment(60,'03/02/2021')
-        self.assertTrue(Emp, msg="Wrong Staff ID")  
+        Emp = MainFile.Employee(11111, 'Green', 'Joe', 37, 16, 1.5, 70, 700)
+        comp = Emp.ComputePayment(60,'03/02/2021')
+        self.assertTrue(comp, msg="Wrong Staff ID")  
 
     def test_negative_NetPay(self):
-        Emp =EmployeeClass.Employee(12349,EmplDb=self.get_file())
-        try:
-            Emp = Emp.ComputePayment(2,'01/11/2021')
-        except ValueError as error:
-            self.assertEqual(type(error),ValueError)
+        Emp = MainFile.Employee(12349, 'Ji', 'Joe', 30, 10, 0, 12, 121)
+        comp = Emp.ComputePayment(2,'01/11/2021')
+        self.assertNotEqual(comp['Net Pay'] ,0, msg='Negative Netpay')
+        
+    def test_Exception(self):
+        with self.assertRaises(TypeError):                  #if the arg is missing
+            Emp = MainFile.Employee(12349, 'Ji', 'Joe', 30, 0, 12, 121)
+            comp = Emp.ComputePayment(2,'01/11/2021')
 
 if __name__ == '__main__':
     unittest.main()
