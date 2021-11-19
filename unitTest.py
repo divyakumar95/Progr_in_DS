@@ -3,7 +3,7 @@ import os
 import Employee as EmployeeClass
 
 class Test(unittest.TestCase):
-    def test_create_file(self):
+    def setUp(self):
         with open(self.get_file(),'w') as f:
             f.write("""StaffID LastName FirstName RegHours HourlyRate OTMultiple TaxCredit StandardBand
 12345 Green Joe 37 16 1.5 70 700
@@ -16,6 +16,9 @@ class Test(unittest.TestCase):
     def get_file(self): 
         TestDb='./DataFiles/testDb.txt'
         return TestDb
+
+    def tearDown(self):
+        os.remove(self.get_file())     #use as a last function to delete the test file
 
     def test_expect_responce (self):
         Emp = EmployeeClass.Employee(12345,EmplDb=self.get_file())
@@ -80,10 +83,8 @@ class Test(unittest.TestCase):
         except ValueError as error:
             self.assertEqual(type(error),ValueError)
 
+
+
 if __name__ == '__main__':
     unittest.main()
-    #try:                #use as a last function to delete the test file
-    #os.remove('./DataFiles/testDb.txt')
-    #print("here in deletion")
-    #except Exception as e:  
-    #    print(e)
+    removeFile()
