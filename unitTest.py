@@ -30,22 +30,22 @@ class Test(unittest.TestCase):
         comp = Emp.ComputePayment(2,'31/10/2021')
         self.assertDictEqual(comp, 
         {'Date': '31/10/2021',
-        'Gross Pay': 561,
+        'Gross Pay': 34,
         'Higher Rate Pay': 0,
         'Higher Tax': 0.0,
         'Name': 'Joe Gi',
-        'Net Deductions': 60.0,
-        'Net Pay': 501.0,
+        'Net Deductions': 0,
+        'Net Pay': 34,
         'Overtime Hours Worked': 0,
         'Overtime Pay': 0,
         'Overtime Rate': 24,
         'Regular Hours Worked': 2,
-        'Regular Pay': 561,
+        'Regular Pay': 34,
         'Regular Rate': 17,
         'Standard Rate Pay': 600,
-        'Standard Tax': 120.0,
+        'Standard Tax': 6.8,
         'Tax Credit': 60,
-        'Total Tax': 120.0 }, msg="Different message obtained")
+        'Total Tax': 6.8 }, msg="Different message obtained")
 
     def test_Regular_WorkHr(self):
         Emp = MainFile.Employee(12350, 'Sing', 'Honey', 45, 20, 2, 65, 900)
@@ -72,13 +72,13 @@ class Test(unittest.TestCase):
         comp = Emp.ComputePayment(60,'03/02/2021')
         self.assertTrue(comp, msg="Wrong Staff ID")  
 
-    def test_negative_NetPay(self):
+    def test_negative_NetPay(self):                 #Test Case to Check negative Netpay if Not worked
         Emp = MainFile.Employee(12349, 'Ji', 'Joe', 30, 10, 0, 12, 121)
-        comp = Emp.ComputePayment(2,'01/11/2021')
-        self.assertNotEqual(comp['Net Pay'] ,0, msg='Negative Netpay')
+        comp = Emp.ComputePayment(0,'01/11/2021')
+        self.assertEqual(comp['Net Pay'] ,0, msg='Negative Netpay')
         
-    def test_Exception(self):
-        with self.assertRaises(TypeError):                  #if the arg is missing
+    def test_Exception_Arg(self):                    #Test case for missing arg
+        with self.assertRaises(TypeError):                  
             Emp = MainFile.Employee(12349, 'Ji', 'Joe', 30, 0, 12, 121)
             comp = Emp.ComputePayment(2,'01/11/2021')
 

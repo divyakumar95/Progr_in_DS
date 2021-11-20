@@ -16,37 +16,45 @@ class Employee:
 
     def ComputePayment(self, HoursWorked=None , Date=None):  
         self.HoursWorked = int(HoursWorked)
-        self.Date = Date
+        Name = self.FirstName +' '+ self.LastName
+
         if self.HoursWorked > self.RegHr:                           # Check for Overtime 
             overTime = self.HoursWorked - self.RegHr
             RegHourworked = self.RegHr
+            RegularRate = self.RegHr * self.HourlyRate
         else:
             overTime = 0
             RegHourworked = self.HoursWorked
+            RegularRate = RegHourworked * self.HourlyRate
+        
         overTimePay = overTime * self.OtRate
-        RegularRate = self.RegHr * self.HourlyRate
-        GrossPay = (self.HourlyRate * self.RegHr) + (overTimePay)
-        if GrossPay > self.StdBnd:                                  # Check for High Payment Rate 
+        GrossPay = RegularRate + overTimePay
+        
+        if GrossPay > self.StdBnd:                                  # Check for High Payment Rate and Gross pay 
             HighPayBand = GrossPay - self.StdBnd
+            StandardTax = self.StdBnd * self.ST
         else:
             HighPayBand = 0
-        StandardTax = self.StdBnd * self.ST
+            StandardTax = self.ST * GrossPay
+
         HighTax = HighPayBand * self.HT
         TotalTax = StandardTax + HighTax
-        Name = self.FirstName +' '+ self.LastName
-        NetDeductions = self.TaxCredit + HighTax
-        if GrossPay != 0:
+            
+        if GrossPay != 0:                                                             
+            NetDeductions = self.TaxCredit + HighTax
+            if NetDeductions > GrossPay:
+                NetDeductions = 0
             NetPay = GrossPay - NetDeductions
-        else:
-            raise ValueError('Regular hour or hourly rate can not be zero')
-        Date = self.Date
+        else:                                                      # Gross pay is zero
+            NetDeductions = 0
+            NetPay = GrossPay
                 
         return {'Name': Name, 'Date':Date, 'Regular Hours Worked': RegHourworked,
                 'Overtime Hours Worked':overTime,'Regular Rate':self.HourlyRate,
                 'Overtime Rate':self.OtRate, 'Regular Pay':RegularRate, 'Overtime Pay':overTimePay,
                 'Gross Pay':GrossPay, 'Standard Rate Pay':self.StdBnd,'Higher Rate Pay':HighPayBand,
                 'Standard Tax':round(StandardTax,2),'Higher Tax':round(HighTax,2), 'Total Tax': round(TotalTax,2), 'Tax Credit':self.TaxCredit,
-                'Net Deductions':NetDeductions, 'Net Pay': NetPay}
+                'Net Deductions':round(NetDeductions,2), 'Net Pay': NetPay}
 
 def main(EmplDb=None, StaffDb=None):
     if EmplDb == None and StaffDb is None:                     #check for external file source 
@@ -89,3 +97,6 @@ def createFile():
 if __name__ == '__main__':
     createFile()
     main()
+    #Emp = Employee(12349, 'Ji', 'Joe', 30, 10, 0, 12, 721)
+    #comp = Emp.ComputePayment(20,'01/11/2021')
+    #print(comp)
